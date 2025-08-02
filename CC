@@ -1,0 +1,34 @@
+// stellar.js
+import StellarSdk from 'stellar-sdk';
+
+const server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
+
+export const sendXLM = async ({ fromSecret, toPublic, amount }) => {
+  try {
+    const sourceKeypair = StellarSdk.Keypair.fromSecret(fromSecret);
+    const account = await server.loadAccount(sourceKeypair.publicKey());
+
+    const fee = await server.fetchBaseFee();
+
+    const transaction = new StellarSdk.TransactionBuilder(account, {
+      fee,
+      networkPassphrase: StellarSdk.Networks.TESTNET,
+    })
+      .addOperation(StellarSdk.Operation.payment({
+        destination: toPublic,
+        asset: StellarSdk.Asset.native(),
+        amount: amount.toString(),
+      }))
+      .setTimeout(30)
+      .build();
+
+    transaction.sign(sourceKeypair);
+    const result = await server.submitTransaction(transaction);
+
+    return { success: true, hash: result.hash };
+  } catch (error) {
+    console.error('Stellar send error:', error);
+    return { success: false, error: error.message };
+  }
+};
+
