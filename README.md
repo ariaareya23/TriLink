@@ -6,7 +6,7 @@
 
 ## 🚀 Live Demo
 
-[🔗 Vercel frontend link (coming soon)](https://trilink.vercel.app)  
+[🔗 Vercel frontend link (https://tri-link-ariaareya23s-projects.vercel.app)
 [🔗 Render backend link (coming soon)](https://trilink-api.onrender.com)
 
 ---
