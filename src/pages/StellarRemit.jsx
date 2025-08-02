@@ -15,7 +15,7 @@ function StellarRemit() {
     setTxHash(null);
 
     try {
-      const response = await axios.post('http://localhost:3000/api/send-stellar', {
+      const response = await axios.post('https://trilink-backend-4kvo.onrender.com/api/send-stellar', {
         fromSecret,
         toAddress,
         amount,
